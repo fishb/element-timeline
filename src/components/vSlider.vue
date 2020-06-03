@@ -5,7 +5,7 @@
                 <popper v-if="!item.overdue && !item.disabled && item.visible" :timeformat="timeformat" :hoverslot="tips">
                     <div class="popper-slot" slot="content">
                         <el-button type="text" @click.stop="onCancel">取消</el-button>
-                        <el-button type="primary" @click.stop="EventEmit">确定</el-button>
+                        <el-button type="primary" @click.stop="EventEmit(item.hour,index,$event)">确定</el-button>
                     </div>
                 </popper>
                 <popper v-if="item.overdue && item.overdueShow" :timeformat="'已过期'" hoverslot=" " class="diableBox">  
@@ -70,8 +70,8 @@ export default {
     data() {
         return {  
             hourList: [],
-            selectmin: 0,
-            selectmax: 0,
+            selectmin: "",
+            selectmax: "",
             startX: 0,
             endX: 0,
             isMove: false, //是否移动了光标  
@@ -83,13 +83,17 @@ export default {
     computed: {
         /** 时间提示格式化 **/
         timeformat() {
-            if(this.hovermax < this.selectmin) {
-                return this.formatTimeList([this.hovermin,this.selectmax])
-            }else if(this.hovermin > this.selectmax) {
-                return this.formatTimeList(this.selectmin < this.selectmax ? [this.selectmin,this.hovermax] : [this.selectmax,this.hovermax])
-            }else {
-                return this.formatTimeList(this.selectmin < this.selectmax ? [this.selectmin,this.selectmax] : [this.selectmax,this.selectmin]) || ""
-            } 
+            if(this.isMove && this.hovermin && this.hovermax && this.selectmin && this.selectmax) {
+                if(this.hovermax < this.selectmin) {
+                    return this.formatTimeList([this.hovermin,this.selectmax])
+                }else if(this.hovermin > this.selectmax) {
+                    return this.formatTimeList(this.selectmin < this.selectmax ? [this.selectmin,this.hovermax] : [this.selectmax,this.hovermax])
+                }else {
+                    return this.formatTimeList(this.selectmin < this.selectmax ? [this.selectmin,this.selectmax] : [this.selectmax,this.selectmin])
+                }
+            }else{
+                return this.formatTimeList(this.selectmin < this.selectmax ? [this.selectmin,this.selectmax] : [this.selectmax,this.selectmin])
+            }    
         },
         /**提示   选中的长度为1显示移动光标 如果移动鼠标则提示再次点击 **/
         tips() {
@@ -139,18 +143,8 @@ export default {
                 }
             });
         },
-        /** 点击按钮改变原有数组的属性并且添加到selectHours. 长度大于1点击按钮则为重选，清空掉前面选择的 **/
-        ClickVslider(hour,index,e) {
-            if(!this.selectHours.length || this.selectHours.length>1) {
-                this.selectmin = hour[0];
-                this.selectmax = hour[1];
-                this.isMove = true;
-                this.startX = e.x;
-                this.endX = e.x;
-            }
-            //第二次次点击按钮
-            if(this.selectHours.length===1) {
-                /**如果选择的区间包括禁用了的区间**/
+        SecondsClick(hour,index,e) {
+             /**如果选择的区间包括禁用了的区间**/
                let key = this.hourList.findIndex((u,ukey)=>{
                    if(u.hour[0]===this.selectHours[0].hour[0]){
                        return ukey
@@ -174,6 +168,20 @@ export default {
                        ischecked: item.hour[0] < max && item.hour[1] > min
                    }
                })
+        },
+        /** 点击按钮改变原有数组的属性并且添加到selectHours. 长度大于1点击按钮则为重选，清空掉前面选择的 **/
+        ClickVslider(hour,index,e) {
+            if(!this.selectHours.length || this.selectHours.length>1) {
+                this.selectmin = hour[0];
+                this.selectmax = hour[1];
+                this.isMove = true;
+                this.startX = e.x;
+                this.endX = e.x;
+            }
+            //第二次次点击按钮
+            if(this.selectHours.length===1) {
+               this.isMove = false;
+               this.SecondsClick(hour,index,e)
             }
             //重置
             if(this.selectHours.length>1) {
@@ -198,7 +206,7 @@ export default {
             }) 
         },
         onCancel() {
-            [this['selectmin'],this['selectmax'],this['selectHours'],this['isMove']] = ["","",[],false];
+            [this.selectmin,this.selectmax,this.selectHours,this.isMove,this.hovermin,this.hovermax] = [0,0,[],false,"",""];
             this.hourList = this.hourList.map(item=>{
                 return {
                     ...item,
@@ -208,9 +216,12 @@ export default {
                 }
             })
         },
-        EventEmit() {
+        EventEmit(hour,index,e) {
+            if(this.selectHours.length === 1) {
+                this.SecondsClick(hour,index,e)
+            }
             this.$emit('getHours',{time:[this.formatTime(this.selectmin),this.formatTime(this.selectmax)], timeformat: this.timeformat});
-            [this.selectmin,this.selectmax,this.startX,this.endX,this.hovermax,this.hovermin,this.selectHours,this.isMove] = [0,0,0,0,0,0,[],false];
+            [this.selectmin,this.selectmax,this.startX,this.endX,this.hovermax,this.hovermin,this.selectHours,this.isMove] = ["","",0,0,"","",[],false];
             this.hourList = this.getHoursList();
         },
         mouseoverItem(item) {
