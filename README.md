@@ -1,7 +1,7 @@
 # demo
 
 
-[预览地址](https://element-timeline/weakwater.com)
+[预览地址](http://element-timeline/weakwater.com)
 属性 | 属性名 | 是否必填 | 默认值 | 类型
 ---|---|---|---|---
 最小时间 | minHour | 否 | 0 | string/number
