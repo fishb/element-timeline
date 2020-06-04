@@ -19,7 +19,7 @@ dom节点 | domRef | 是 | "" | string
 事件名称 | 说明 | 回调参数
 ---|---|---
 getHours | 获取返回参数 | 组件绑定值
-clearHours | 重置其它vslider组件状态 |  组件绑定值
+clearHours | 重置其它time-line组件状态 |  组件绑定值
 
 ###### 默认状态
 
