@@ -17,27 +17,35 @@ dom节点 | domRef | 是 | "" | string
 ###### 默认状态
 
 ```
-<v-slider domRef="vs" @getHours="getHours" />
+<v-slider domRef="vs" @getHours="getHours" :clear="clear=='vs'" @clearHours="clearHours"/>
 ```
 
 ###### 被我选择过的时段
 
 ```
-<v-slider domRef="vs3" :minHour="7" :maxHour="23" :checkedList="[12,12.5,13.5]"  @getHours="getHours" />
+<v-slider domRef="vs3" :minHour="7" :maxHour="23" :checkedList="[12,12.5,13.5]"  @getHours="getHours" :clear="clear=='vs3'" @clearHours="clearHours"/>
 ```
 
 ###### 其它人选择过的时段
 
 ```
-<v-slider domRef="vs18" :minHour="10" :maxHour="21" :disabledList="[{name:'张三',time:15},{name:'李四',time:15.5},{name:'王五',time:16}]" @getHours="getHours" />
-
-## Project setup
+<v-slider domRef="vs18" :minHour="10" :maxHour="21" :disabledList="[{name:'张三',time:15},{name:'李四',time:15.5},{name:'王五',time:16}]" @getHours="getHours" :clear="clear=='vs18'" @clearHours="clearHours"/>
 ```
-npm install
 ```
-
-### Compiles and hot-reloads for development
+/**
+*
+* 获取选择后的参数
+**/
+getHours(e) {
+    this.$message({
+        type: 'success',
+        message: JSON.stringify(e)
+    })
+}
+/**
+*   借住父组件的clear实现组件互相触发重置功能
+**/
+clearHours(e) {
+    this.clear = e
+}
 ```
-npm run serve
-```
-

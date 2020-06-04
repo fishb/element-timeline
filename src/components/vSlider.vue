@@ -65,6 +65,10 @@ export default {
         domRef: {
             type: String,
             default: ""
+        },
+        clear: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -78,6 +82,14 @@ export default {
             selectHours: [], //选择的时间 
             hovermin: "", //鼠标悬浮的最小时间 
             hovermax: "" //鼠标悬浮的最大时间
+        }
+    },
+    watch: {
+        clear(newValue,oldValue) {
+            if(!newValue) {
+                this.onCancel()
+                console.log(oldValue)
+            }
         }
     },
     computed: {
@@ -204,6 +216,7 @@ export default {
                 this.$set(this.hourList[index],'ischecked',data.ischecked ? data.ischecked : !data.ischecked)
                 this.selectHours.push(this.hourList[index]);
             }) 
+            this.Clear()
         },
         onCancel() {
             [this.selectmin,this.selectmax,this.selectHours,this.isMove,this.hovermin,this.hovermax] = [0,0,[],false,"",""];
@@ -216,6 +229,7 @@ export default {
                 }
             })
         },
+        // 确定
         EventEmit(hour,index,e) {
             if(this.selectHours.length === 1) {
                 this.SecondsClick(hour,index,e)
@@ -223,6 +237,10 @@ export default {
             this.$emit('getHours',{time:[this.formatTime(this.selectmin),this.formatTime(this.selectmax)], timeformat: this.timeformat});
             [this.selectmin,this.selectmax,this.startX,this.endX,this.hovermax,this.hovermin,this.selectHours,this.isMove] = ["","",0,0,"","",[],false];
             this.hourList = this.getHoursList();
+        },
+        // 重置
+        Clear() {
+            this.$emit('clearHours',this.domRef)
         },
         mouseoverItem(item) {
             //被我预定
@@ -263,6 +281,7 @@ export default {
         this.hourList = this.getHoursList()
     },
     mounted() {
+        console.log(this.$refs[this.domRef])
         this.$refs[this.domRef].addEventListener('mousemove',(e)=>{
             if(this.isMove) {
                this.endX = e.x;
