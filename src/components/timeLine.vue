@@ -26,7 +26,7 @@
 <script>
 import popper from '@/components/popper';
 export default {
-    name: 'vSlider',
+    name: 'timeLine',
     components: {
         popper
     },
@@ -86,9 +86,9 @@ export default {
     },
     watch: {
         clear(newValue,oldValue) {
+            console.info(oldValue)
             if(!newValue) {
                 this.onCancel()
-                console.log(oldValue)
             }
         }
     },
@@ -281,10 +281,11 @@ export default {
         this.hourList = this.getHoursList()
     },
     mounted() {
-        console.log(this.$refs[this.domRef])
         this.$refs[this.domRef].addEventListener('mousemove',(e)=>{
             if(this.isMove) {
-               this.endX = e.x;
+                if(e.x!==this.startX) {
+                    this.endX = e.x;
+                }
                let index = e.target.getAttribute('hourkey');
                let key = this.selectHours.length ? this.hourList.findIndex((u,ukey)=>{
                    if(u.hour[0]===this.selectHours[0].hour[0]){

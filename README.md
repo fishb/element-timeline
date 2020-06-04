@@ -2,6 +2,8 @@
 
 
 [预览地址](http://element-timeline.weakwater.com)
+
+### Attributes
 属性 | 属性名 | 是否必填 | 默认值 | 类型
 ---|---|---|---|---
 最小时间 | minHour | 否 | 0 | string/number
@@ -12,7 +14,13 @@
 被我预定 | checkedList | 否 | [] | array
 dom节点 | domRef | 是 | "" | string
 
+属性 | 属性名 | 是否必填 | 默认值 | 类型
 
+### Events
+事件名称 | 说明 | 回调参数
+---|---|---
+getHours | 获取返回参数 | 组件绑定值
+clearHours | 重置其它vslider组件状态 |  组件绑定值
 
 ###### 默认状态
 
@@ -43,7 +51,7 @@ getHours(e) {
     })
 }
 /**
-*   借住父组件的clear实现组件互相触发重置功能
+*   借助父组件的clear实现组件互相触发重置功能
 **/
 clearHours(e) {
     this.clear = e
