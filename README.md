@@ -14,7 +14,6 @@
 被我预定 | checkedList | 否 | [] | array
 dom节点 | domRef | 是 | "" | string
 
-属性 | 属性名 | 是否必填 | 默认值 | 类型
 
 ### Events
 事件名称 | 说明 | 回调参数
@@ -25,19 +24,19 @@ clearHours | 重置其它vslider组件状态 |  组件绑定值
 ###### 默认状态
 
 ```
-<v-slider domRef="vs" @getHours="getHours" :clear="clear=='vs'" @clearHours="clearHours"/>
+<time-line domRef="vs" @getHours="getHours" :clear="clear=='vs'" @clearHours="clearHours"/>
 ```
 
 ###### 被我选择过的时段
 
 ```
-<v-slider domRef="vs3" :minHour="7" :maxHour="23" :checkedList="[12,12.5,13.5]"  @getHours="getHours" :clear="clear=='vs3'" @clearHours="clearHours"/>
+<time-line domRef="vs3" :minHour="7" :maxHour="23" :checkedList="[12,12.5,13.5]"  @getHours="getHours" :clear="clear=='vs3'" @clearHours="clearHours"/>
 ```
 
 ###### 其它人选择过的时段
 
 ```
-<v-slider domRef="vs18" :minHour="10" :maxHour="21" :disabledList="[{name:'张三',time:15},{name:'李四',time:15.5},{name:'王五',time:16}]" @getHours="getHours" :clear="clear=='vs18'" @clearHours="clearHours"/>
+<time-line domRef="vs18" :minHour="10" :maxHour="21" :disabledList="[{name:'张三',time:15},{name:'李四',time:15.5},{name:'王五',time:16}]" @getHours="getHours" :clear="clear=='vs18'" @clearHours="clearHours"/>
 ```
 ```
 /**
