@@ -378,4 +378,18 @@ ul,li{
 .popper-slot .el-button{
     padding: 4px 8px;
 }
+.vslider-item:last-child >>> .vslider-popper{
+    left:  0;
+    transform: translate(-85%, 0);
+}
+.vslider-item:last-child >>> .vslider-popper .popper__arrow{
+    left: 90%;
+}
+.vslider-item:first-child >>> .vslider-popper{
+    left:  50%;
+    transform: translate(0%, 0);
+}
+.vslider-item:first-child >>> .vslider-popper .popper__arrow{
+    left: 10%;
+}
 </style>
