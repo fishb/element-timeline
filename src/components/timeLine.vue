@@ -31,6 +31,10 @@ export default {
         popper
     },
     props: {
+        date: {
+            type: [String],
+            default: ""
+        },
         minHour: {
             type: [String,Number],
             default: 0
@@ -126,7 +130,7 @@ export default {
         },
         formatTimeList(list) {
             let [min,max] = list;
-            let minutes = (max - min) / 0.5 * this.unit;
+            let minutes = (max - min) / this.scale * this.unit;
             return `${this.formatTime(min)}~${this.formatTime(max)} ${minutes}分钟`
         },
         getnum(num) {
@@ -135,6 +139,7 @@ export default {
             return minute
         },
         getHoursList() {
+            //let hour = new Date(this.date).getHours() + new Date(this.date).getMinutes() / 60;
             let hour = new Date().getHours() + new Date().getMinutes() / 60;
             let arr = [];
             for(let i=this.minHour; i<this.maxHour; i+=this.scale) {
@@ -145,7 +150,7 @@ export default {
                     hour: [item,item+this.scale],
                     visible: false, //弹出
                     disabled: this.disabledList.map(i=>i.time).includes(item), //禁用
-                    overdue: item + this.scale < hour,
+                    overdue: !this.date ?  item + this.scale < hour : new Date().getTime() < new Date(this.date).getTime(),
                     checked: this.checkedList.includes(item), //已选
                     ischecked: false, //选中
                     ishover: false, //悬浮
@@ -367,9 +372,14 @@ ul,li{
 .vslider-number span{
     flex: 1;
     text-align: left;
+    margin-left: -8px;
+}
+.vslider-number span:first-child {
+    margin-left: 0;
 }
 .vslider-number span:last-child{
     text-align: right;
+    margin-left: 0;
 }
 .popper-slot{
     margin: 5px 0;
