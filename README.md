@@ -13,6 +13,7 @@
 被他人预定 | disabledList | 否 | [{name:'',time:0}] | array
 被我预定 | checkedList | 否 | [] | array
 dom节点 | domRef | 是 | "" | string
+传入时间 | date | 否 | "" | string
 
 
 ### Events
@@ -38,6 +39,13 @@ clearHours | 重置其它time-line组件状态 |  组件绑定值
 ```
 <time-line domRef="vs18" :minHour="10" :maxHour="21" :disabledList="[{name:'张三',time:15},{name:'李四',time:15.5},{name:'王五',time:16}]" @getHours="getHours" :clear="clear=='vs18'" @clearHours="clearHours"/>
 ```
+
+###### 传递时间
+
+```
+<time-line domRef="vs19" :date="'2020-06-08'" :minHour="10" :maxHour="21" @getHours="getHours" :clear="clear=='vs19'" @clearHours="clearHours"/>
+```
+
 ```
 /**
 *
