@@ -203,29 +203,7 @@ export default {
       if (this.selectHours.length !== 1) return "";
       if (this.endX !== this.startX) return "(再次点击确认时段)";
       return "(移动光标选择更多时段)";
-    },
-    // getHoursList() {
-    //   let nowTime = getTimestamp(new Date());
-    //   let hour = `${nowTime.ymd} ${nowTime.hm}`;
-    //   let arr = [];
-    //   for (let i = this.minHour; i < this.maxHour; i += this.scale) {
-    //     arr.push(i);
-    //   }
-    //   return arr.map(item => {
-    //     return {
-    //       hour: [item, item + this.scale],
-    //       visible: false, //弹出
-    //       disabled: this.disabledList.map(i => i.time).includes(item), //禁用
-    //       overdue: new Date(`${this.date} ${this.formatTime(item + this.scale)}`).getTime() - (this.advance*60*60*1000) < new Date(hour).getTime(),
-    //       checked: this.checkedList.includes(item), //已选
-    //       ischecked: false, //选中
-    //       ishover: false, //悬浮
-    //       overdueShow: false, //过期的弹窗
-    //       checkedShow: false, //已经被预定的弹窗
-    //       disabledShow: false // 其他人预定弹窗
-    //     };
-    //   });
-    // }
+    }
   },
   methods: {
     formatTime(num) {
