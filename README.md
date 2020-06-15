@@ -13,7 +13,8 @@
 被他人预定 | disabledList | 否 | [{name:'',time:0}] | array
 被我预定 | checkedList | 否 | [] | array
 dom节点 | domRef | 是 | "" | string
-传入时间 | date | 否 | "" | string
+传入时间 | date | 否 | "" | string 提前多少小时
+
 
 
 ### Events
