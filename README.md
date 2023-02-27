@@ -1,7 +1,7 @@
 # demo
 
 
-[预览地址](http://element-timeline.weakwater.com)
+[预览地址](https://github.com/fishb/element-timeline/dist/index.html)
 
 ### Attributes
 属性 | 属性名 | 是否必填 | 默认值 | 类型
