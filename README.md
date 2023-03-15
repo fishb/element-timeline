@@ -1,7 +1,7 @@
 # demo
 
 
-[预览地址](https://github.com/fishb/element-timeline/dist/index.html)
+[预览地址](https://github.com/fishb/element-timeline)
 
 ### Attributes
 属性 | 属性名 | 是否必填 | 默认值 | 类型
