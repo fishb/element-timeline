@@ -8,7 +8,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
     proxyTable: {
       "/ret-system": {
         // target: 'http://192.168.2.44:8975',
